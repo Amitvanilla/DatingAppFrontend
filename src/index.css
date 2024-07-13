@@ -1,57 +1,215 @@
-.profile-container {
+/* index.css */
+
+.main-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
-    overflow: hidden;
-    background-color: #f5f5f5;
+}
+
+.profile-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
-    cursor: pointer; /* Added for better UX */
 }
 
 .profile-card {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
     max-width: 400px;
-    height: 600px;
-    position: absolute;
-    transition: transform 0.5s ease-in-out;
-    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s;
 }
 
 .profile-card.swipe-left {
-    transform: translateX(-1000px) rotate(-20deg);
+    transform: translateX(-100%);
 }
 
 .profile-card.swipe-right {
-    transform: translateX(1000px) rotate(20deg);
+    transform: translateX(100%);
 }
 
 .profile-image {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    border-radius: 10px;
 }
 
 .profile-info {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.5);
+    margin-top: 10px;
+}
+
+.sidebar {
+    width: 300px;
+    border-left: 1px solid #ddd;
+}
+
+.sidebar-tabs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    background-color: #f5f5f5;
+}
+
+.tab.active {
+    background-color: #fff;
+    border-bottom: 2px solid #000;
+}
+
+.tab-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.matches-container {
+    padding: 20px;
+}
+
+.match-card {
+    display: flex;
+    align-items: center;
     padding: 10px;
-    border-radius: 10px;
-    color: white;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
 }
 
-.profile-info h1 {
-    margin: 0;
-    font-size: 18px;
-    color: #fff;
+.match-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
-.profile-info p {
+.match-info h4 {
     margin: 0;
-    font-size: 14px;
-    color: #fff;
 }
+
+.message-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.message-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.message-input button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.slide-in-chat {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    width: calc(100% - 300px); /* Full width minus the sidebar */
+    height: 100%;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.3s;
+    z-index: 1000;
+}
+
+.slide-in-chat.open {
+    left: 0;
+}
+
+.slide-in-chat-content {
+    padding: 20px;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.message {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.message.sent {
+    text-align: right;
+}
+
+.message.received {
+    text-align: left;
+}
+
+.timestamp {
+    display: block;
+    font-size: 0.8em;
+    color: #888;
+}
+
+/* index.css */
+
+.messages-section {
+    padding: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.messages-section h2 {
+    margin-bottom: 10px;
+}
+
+.messages-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.message-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.message-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.message-info {
+    flex-grow: 1;
+}
+
+.timestamp {
+    display: block;
+    font-size: 0.8em;
+    color: #888;
+}
+

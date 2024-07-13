@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import styles from '../index.css';
+// Messages.js
+import React from 'react';
+import '../index.css';
 
-const Messages = () => {
-    const [messages, setMessages] = useState([]);
-
-    useEffect(() => {
-        axios.get('/api/messages').then(response => {
-            setMessages(response.data);
-        });
-    }, []);
+const Messages = ({ messages, onSelectMatch }) => {
+    if (!messages || messages.length === 0) {
+        return <div>No messages found.</div>;
+    }
 
     return (
-        <div className={styles.container}>
-            <h1>Messages</h1>
-            {messages.map((message) => (
-                <div key={message._id} className={styles.messageCard}>
-                    <p>From: {message.fromId}</p>
-                    <p>To: {message.toId}</p>
-                    {message.messages.map((msg, index) => (
-                        <div key={index}>
-                            <p className={styles.message}>{msg.message}</p>
-                            <p className={styles.timeStamp}>{msg.timeStamp}</p>
-                        </div>
-                    ))}
-                </div>
-            ))}
+        <div className="messages-section">
+            <h2>Messages</h2>
+            <ul>
+                {messages.map((message) => {
+                    // Get the most recent message
+                    const recentMessage = message.messages[message.messages.length - 1];
+
+                    return (
+                        <li key={message.id} className="message-card" onClick={() => onSelectMatch(message)}>
+                            <img src={"https://i.imgur.com/Gg6BpGn.jpeg"} alt="Profile" className="message-image" />
+                            <div className="message-info">
+                                <strong>{message.fromId}</strong>: {recentMessage.message}
+                                <span className="timestamp">{new Date(recentMessage.timeStamp).toLocaleString()}</span>
+                            </div>
+                        </li>
+                    );
+                })}
+            </ul>
         </div>
     );
 };

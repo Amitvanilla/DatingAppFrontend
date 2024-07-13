@@ -1,12 +1,15 @@
+// SwipeableProfiles.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSwipeable } from 'react-swipeable';
+import SidebarTabs from './SidebarTabs';
 import '../index.css';
 
 const SwipeableProfiles = () => {
     const [profiles, setProfiles] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [swipeDirection, setSwipeDirection] = useState(null);
+    const [selectedMatch, setSelectedMatch] = useState(null);
 
     useEffect(() => {
         axios.get('http://localhost:8080/api/users').then((response) => {
@@ -59,18 +62,23 @@ const SwipeableProfiles = () => {
     const age = calculateAge(currentProfile.dob);
 
     return (
-        <div className="profile-container" onClick={handleClick}>
-            <div
-                {...handlers}
-                className={`profile-card ${swipeDirection === 'left' ? 'swipe-left' : ''} ${
-                    swipeDirection === 'right' ? 'swipe-right' : ''
-                }`}
-            >
-                <img src={currentProfile.imageUrl} alt="Profile" className="profile-image" />
-                <div className="profile-info">
-                    <h1>{currentProfile.fullName}</h1>
-                    <p>{age} years old</p>
+        <div className="main-container">
+            <div className="profile-container" onClick={handleClick}>
+                <div
+                    {...handlers}
+                    className={`profile-card ${swipeDirection === 'left' ? 'swipe-left' : ''} ${
+                        swipeDirection === 'right' ? 'swipe-right' : ''
+                    }`}
+                >
+                    <img src={currentProfile.imageUrl} alt="Profile" className="profile-image" />
+                    <div className="profile-info">
+                        <h1>{currentProfile.fullName}</h1>
+                        <p>{age} years old</p>
+                    </div>
                 </div>
+            </div>
+            <div className="sidebar">
+                <SidebarTabs onSelectMatch={setSelectedMatch} selectedMatch={selectedMatch} />
             </div>
         </div>
     );

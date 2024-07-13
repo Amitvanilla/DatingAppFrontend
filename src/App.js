@@ -5,12 +5,14 @@ import Messages from './components/Messages';
 import Matches from './components/Matches';
 import Hobbies from './components/Hobbies';
 import SwipeableProfiles from './components/SwipeableProfiles';
+import Login from "./components/Login";
 
 function App() {
     return (
         <Router>
             <div className="App">
                 <Routes>
+                    <Route path="/login" element={<Login />} />
                     <Route path="/" element={<SwipeableProfiles />} />
                     <Route path="/profile" element={<UserProfile />} />
                     <Route path="/messages" element={<Messages />} />

@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import styles from '../index.css';
+// Matches.js
+import React from 'react';
+import '../index.css';
 
-const Matches = () => {
-    const [matches, setMatches] = useState([]);
-
-    useEffect(() => {
-        axios.get('/api/matches').then(response => {
-            setMatches(response.data);
-        });
-    }, []);
+const Matches = ({ matches, onSelectMatch }) => {
+    if (!matches || matches.length === 0) {
+        return <div>No matches found.</div>;
+    }
 
     return (
-        <div className={styles.container}>
-            <h1>Matches</h1>
+        <div className="matches-container">
             {matches.map((match) => (
-                <div key={match._id} className={styles.matchCard}>
-                    <p className={styles.matchDetails}>From: {match.fromId}</p>
-                    <p className={styles.matchDetails}>To: {match.toId}</p>
-                    <p className={styles.matchDetails}>Matched On: {match.matchedOn}</p>
+                <div key={match.id} className="match-card" onClick={() => onSelectMatch(match)}>
+                    <img src={"https://i.imgur.com/Gg6BpGn.jpeg"} alt="Profile" className="match-image" />
+                    <div className="match-info">
+                        <h4>{"match.fullName"}</h4>
+                    </div>
                 </div>
             ))}
         </div>
