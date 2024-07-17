@@ -78,7 +78,7 @@ const SwipeableProfiles = () => {
                 </div>
             </div>
             <div className="sidebar">
-                <SidebarTabs onSelectMatch={setSelectedMatch} selectedMatch={selectedMatch} />
+                <SidebarTabs/>
             </div>
         </div>
     );

@@ -1,4 +1,3 @@
-// SlideInChat.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../index.css';
@@ -9,9 +8,10 @@ const SlideInChat = ({ isOpen, onClose, selectedMatch }) => {
 
     useEffect(() => {
         if (isOpen && selectedMatch) {
-            axios.get(`http://localhost:8080/api/messages}`)
+            // Fetch messages for the selected match
+            axios.get(`http://localhost:8080/api/messages/${selectedMatch.fromId}/${selectedMatch.toId}`)
                 .then(response => {
-                    setMessages(response.data);
+                    setMessages(response.data.messages);
                 })
                 .catch(error => {
                     console.error("Error fetching messages:", error);
@@ -22,14 +22,18 @@ const SlideInChat = ({ isOpen, onClose, selectedMatch }) => {
     const handleSendMessage = () => {
         if (newMessage.trim() !== "") {
             const message = {
-                matchId: selectedMatch.id,
-                text: newMessage,
-                senderId: 'currentUserId', // Replace with the actual sender ID
-                timestamp: new Date().toISOString()
+                fromId: 'user1', // Replace with the actual sender ID
+                toId: selectedMatch.toId,
+                messages: [
+                    {
+                        message: newMessage,
+                        timeStamp: new Date().toISOString()
+                    }
+                ]
             };
             axios.post('http://localhost:8080/api/messages', message)
                 .then(response => {
-                    setMessages([...messages, response.data]);
+                    setMessages(prevMessages => [...prevMessages, response.data.messages[0]]);
                     setNewMessage("");
                 })
                 .catch(error => {
@@ -48,10 +52,10 @@ const SlideInChat = ({ isOpen, onClose, selectedMatch }) => {
                     <>
                         <h2>Chat with {selectedMatch.fullName}</h2>
                         <div className="messages-container">
-                            {messages.map((message, index) => (
-                                <div key={index} className={`message ${message.senderId === 'currentUserId' ? 'sent' : 'received'}`}>
-                                    <p>{message.text}</p>
-                                    <span className="timestamp">{new Date(message.timestamp).toLocaleTimeString()}</span>
+                            {messages.map((msg, index) => (
+                                <div key={index} className={`message ${msg.fromId === 'currentUserId' ? 'sent' : 'received'}`}>
+                                    <p>{msg.message}</p>
+                                    <span className="timestamp">{new Date(msg.timeStamp).toLocaleTimeString()}</span>
                                 </div>
                             ))}
                         </div>

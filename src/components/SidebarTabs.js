@@ -6,11 +6,12 @@ import Messages from './Messages';
 import SlideInChat from './SlideInChat';
 import '../index.css';
 
-const SidebarTabs = ({ onSelectMatch, selectedMatch }) => {
+const SidebarTabs = () => {
     const [activeTab, setActiveTab] = useState('matches');
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [matches, setMatches] = useState([]);
     const [messages, setMessages] = useState([]);
+    const [selectedMatch, setSelectedMatch] = useState(null);
 
     useEffect(() => {
         axios.get('http://localhost:8080/api/matches').then((response) => {
@@ -27,9 +28,14 @@ const SidebarTabs = ({ onSelectMatch, selectedMatch }) => {
     };
 
     const handleMatchSelect = (match) => {
-        onSelectMatch(match);
+        setSelectedMatch(match)
         setIsChatOpen(true);
+
     };
+
+    const handleMessagesSelect = (messages) => {
+        setIsChatOpen(true)
+    }
 
     const closeChat = () => {
         setIsChatOpen(false);
@@ -53,7 +59,7 @@ const SidebarTabs = ({ onSelectMatch, selectedMatch }) => {
             </div>
             <div className="tab-content">
                 {activeTab === 'matches' && <Matches matches={matches} onSelectMatch={handleMatchSelect} />}
-                {activeTab === 'messages' && <Messages messages={messages} onSelectMatch={handleMatchSelect} />}
+                {activeTab === 'messages' && <Messages messages={messages} onSelectMatch={handleMessagesSelect} />}
             </div>
             <SlideInChat isOpen={isChatOpen} onClose={closeChat} selectedMatch={selectedMatch} />
         </div>
